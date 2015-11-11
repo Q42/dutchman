@@ -5,21 +5,25 @@ const   Hunspell    = Npm.require("nodehun"),
 
 this.DutchmanHunspell = class {
 
-    suggestions(string) {
-        check(string, String);
+    suggestions(word) {
+        check(word, String);
         const these = this;
         return new Promise((resolve, reject) => {
             these.fetchDictionary().then(() => {
                 if(these.dict == null) {
                     return reject("Dictionary not available");
                 }
-                these.dict.spellSuggestions(string, (err, correct, suggestions, originalWords) => {
+                these.dict.spellSuggestions(word, (err, correct, suggestions, originalWord) => {
                     if(err) {
                         return reject(err);
                     }
-                    resolve(correct, suggestions, originalWords);
+                    resolve({
+                        originalWord: originalWord,
+                        correct: correct,
+                        suggestions: suggestions
+                    });
                 });
-            },reject).catch(reject);
+            },reject);
         });
 
         if(this.dict == null) {
@@ -28,8 +32,8 @@ this.DutchmanHunspell = class {
         return promise;
     }
 
-    stem(string) {
-        check(string, String);
+    stem(word) {
+        check(word, String);
         const these = this;
         return new Promise((resolve, reject) => {
             these.fetchDictionary().then(() => {
@@ -37,14 +41,14 @@ this.DutchmanHunspell = class {
                 if(these.dict == null) {
                     return reject("Dictionary not available");
                 }
-                these.dict.stem(string, (err, stems) => {
+                these.dict.stem(word, (err, stems) => {
                     if(err) {
                         return reject(err);
                     }
                     resolve(stems);
                 });
 
-            }, reject).catch(reject);
+            }, reject);
         });
     }
 

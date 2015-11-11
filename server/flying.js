@@ -24,6 +24,13 @@ class flying {
         const expression = new RegExp(stopwords.join("\\b|\\b"), "gi");
         return string.replace(expression, "").trim();
     }
+
+    static getCleanArray(string) {
+        return string.split(" ")
+            .filter(function(n) {
+                return n != undefined && n != ""
+            });
+    }
 }
 
 Meteor.methods({
@@ -39,27 +46,30 @@ Meteor.methods({
                 reject(err);
             }
 
-            flying.getHunspell().suggestions(text).then((correct, suggestions, originalWords) => {
-                flying.getTranslate(googleApiKey).translate(string).then(translated => {
+            flying.getTranslate(googleApiKey)
+                .translate(string)
+                .then(translated => {
+                    resolve(flying.getCleanArray(
+                        flying.removeStopWords(
+                            DutchmanSnowball.stem(translated),
+                            stopwordsArray_EN)));
+            },reject);
 
-                    const stem = DutchmanSnowball.stem(translated),
-                        finalStem = flying.removeStopWords(stem, stopwordsArray_EN)
-                            .split(" ")
-                            .filter(function(n) {
-                                return n != undefined && n != ""
-                            });
+        });
+    },
 
-                    resolve({
-                        spelling: {
-                            correct: correct,
-                            suggestions: suggestions,
-                            originalWords: originalWords
-                        },
-                        stem: finalStem
-                    });
-                },reject).catch(reject);
-            }, reject).catch(reject);
-
+    checkSpelling(text) {
+        return new Promise((resolve, reject) => {
+            const words = flying.getCleanArray(text);
+            let wordIteration = [];
+            words.forEach(word => {
+                wordIteration.push(flying.getHunspell().suggestions(word))
+            });
+            Promise.all(wordIteration).then((result) => {
+                resolve(result);
+            },(err) => {
+                reject(err);
+            });
         });
     }
 });
