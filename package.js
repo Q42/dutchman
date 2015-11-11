@@ -37,5 +37,8 @@ Package.onTest(function(api) {
   api.use('tinytest');
   api.use('ecmascript');
   api.use('jimmy:dutchman');
-  api.addFiles('test');
+  // Tests will follow soon!
+  api.addFiles([
+    'test/client/dutchman.test.js'
+  ]);
 });
