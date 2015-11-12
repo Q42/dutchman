@@ -36,7 +36,7 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use('tinytest');
   api.use('ecmascript');
-  api.use('jimmy:dutchman');
+  api.use('q42:dutchman');
   // Tests will follow soon!
   api.addFiles([
     'test/client/dutchman.test.js'
