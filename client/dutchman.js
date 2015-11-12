@@ -58,4 +58,29 @@ Meteor.Dutchman = class {
                 resolve(response);
             });
     }
+
+    removeStopWords(string, lang) {
+
+        check(string, String);
+        const these = this;
+        return new Promise((resolve, reject) => {
+            these.removeStopWordsPromise.apply(
+                these, [resolve, reject, string, lang || "nl"])
+        });
+    }
+
+    removeStopWordsPromise(resolve, reject, string, lang) {
+
+        return Meteor.call(
+            'removeStopWords',
+            string,
+            lang || "nl",
+            function(err, response){
+                if(err) {
+                    return reject(err);
+                }
+                resolve(response);
+            }
+        )
+    }
 };

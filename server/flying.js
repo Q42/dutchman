@@ -3,7 +3,6 @@
 class flying {
 
     static getHunspell() {
-
         if (this.dutchmanHunspell == null) {
             this.dutchmanHunspell = new DutchmanHunspell();
         }
@@ -11,7 +10,7 @@ class flying {
     }
 
     static getTranslate(googleApiKey) {
-
+        check(googleApiKey, String);
         if (this.dutchmanTranslate == null) {
             this.dutchmanTranslate = new DutchmanTranslate(googleApiKey);
         }
@@ -26,6 +25,7 @@ class flying {
     }
 
     static getCleanArray(string) {
+        check(string, String);
         return string.split(" ")
             .filter(function(n) {
                 return n != undefined && n != ""
@@ -33,11 +33,27 @@ class flying {
     }
 
     static cleanString(string) {
-        return string.toLowerCase();
+        check(string, String);
+        return string.trim().toLowerCase();
     }
 }
 
 Meteor.methods({
+
+    removeStopWords(string, lang) {
+        check(string, String);
+        return new Promise((resolve) => {
+            switch (lang) {
+                case "en":
+                    return resolve(flying.removeStopWords(
+                        flying.cleanString(string), stopwordsArray_EN));
+                case "nl":
+                default:
+                    return resolve(flying.removeStopWords(
+                        flying.cleanString(string), stopwordsArray_NL));
+            }
+        });
+    },
 
     generalize(googleApiKey, text) {
         return new Promise((resolve, reject) => {
