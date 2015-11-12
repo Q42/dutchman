@@ -1,5 +1,5 @@
 # Dutchman
-__A Dutch linguistics utility meteor package created for Proud__
+__A Dutch linguistics utility meteor package__
 
 [![Build Status][travis-image]][travis-url]
 
@@ -21,7 +21,7 @@ const dutchman = new Meteor.Dutchman("YourGoogleAPIKeyHere");
 Get generalized english stems from an inserted dutch string. These stems may not always be correct and/or understandable words, but they do represent the right Dutch word though. E.G. when inserting 'Presentatie', 'Presenteren' or 'Gepresenteerd', the returned stem will be 'present'.
 
 ```javascript
-dutchman.generalize("Ik heb een stukje proud geprogrammeerd")
+dutchman.generalize("Ik heb een stukje meteor geprogrammeerd")
     .then(function(string){
       console.log(string);
     }, function(err){
@@ -30,14 +30,14 @@ dutchman.generalize("Ik heb een stukje proud geprogrammeerd")
 ```
 __Returns:__
 ```javascript
-["slice", "proud", "program"]
+["slice", "meteor", "program"]
 ```
 
 ### Spelling check
 Will check the existence of each individual word in the dutch dictonary [found in NPM module: dictionary-nl](https://www.npmjs.com/package/dictionary-nl). When the word seems incorrect, it suggests alternatives for the faulty word.
 
 ```javascript
-dutchman.checkSpelling("Ik heb een stukje proud geprogramaard")
+dutchman.checkSpelling("Ik heb een stukje meteor geprogramaard")
     .then(function(string){
       console.log(string);
     }, function(err){
