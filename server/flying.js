@@ -31,13 +31,18 @@ class flying {
                 return n != undefined && n != ""
             });
     }
+
+    static cleanString(string) {
+        return string.toLowerCase();
+    }
 }
 
 Meteor.methods({
 
     generalize(googleApiKey, text) {
         return new Promise((resolve, reject) => {
-            const string = flying.removeStopWords(text, stopwordsArray_NL);
+            const string = flying.removeStopWords(
+                flying.cleanString(text), stopwordsArray_NL);
 
             try {
                 check(googleApiKey, String);
@@ -50,9 +55,10 @@ Meteor.methods({
                 .translate(string)
                 .then(translated => {
                     resolve(flying.getCleanArray(
-                        flying.removeStopWords(
-                            DutchmanSnowball.stem(translated),
-                            stopwordsArray_EN)));
+                        DutchmanSnowball.stem(
+                            flying.removeStopWords(
+                                translated,
+                                stopwordsArray_EN))));
             },reject);
 
         });
@@ -60,7 +66,9 @@ Meteor.methods({
 
     checkSpelling(text) {
         return new Promise((resolve, reject) => {
-            const words = flying.getCleanArray(text);
+            const words = flying.getCleanArray(
+                flying.cleanString(text)
+            );
             let wordIteration = [];
             words.forEach(word => {
                 wordIteration.push(flying.getHunspell().suggestions(word))

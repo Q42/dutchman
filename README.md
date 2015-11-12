@@ -7,7 +7,7 @@ __A Dutch linguistics utility meteor package created for Proud__
 
 Add the package to meteor
 ```
-meteor add jimmy:dutchman
+meteor add q42:dutchman
 ```
 
 ## Basic usage
@@ -25,7 +25,7 @@ dutchman.generalize("Ik heb een stukje proud geprogrammeerd")
 ```
 __Returns:__
 ```javascript
-["slice", "proud", "programmed"]
+["slice", "proud", "program"]
 ```
 
 ### Spelling check

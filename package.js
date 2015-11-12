@@ -1,6 +1,6 @@
 Package.describe({
-  name: 'jimmy:dutchman',
-  version: '0.0.1',
+  name: 'q42:dutchman',
+  version: '0.1.0',
   summary: 'A Dutch linguistics utility library created for Proud',
   git: 'https://github.com/Q42/dutchman',
   // By default, Meteor will default to using README.md for documentation.
