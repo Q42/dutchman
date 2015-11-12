@@ -12,6 +12,11 @@ meteor add q42:dutchman
 
 ## Basic usage
 
+### Create the "object" from the "class"
+```javascript
+const dutchman = new Meteor.Dutchman("YourGoogleAPIKeyHere");
+```
+
 ### Generalize
 Get generalized english stems from an inserted dutch string. These stems may not always be correct and/or understandable words, but they do represent the right Dutch word though. E.G. when inserting 'Presentatie', 'Presenteren' or 'Gepresenteerd', the returned stem will be 'present'.
 
