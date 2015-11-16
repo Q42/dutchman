@@ -1,7 +1,7 @@
 Package.describe({
   name: 'q42:dutchman',
-  version: '0.1.1',
-  summary: 'A Dutch linguistics utility library created for Proud',
+  version: '0.2.0',
+  summary: 'A Dutch linguistics utility library',
   git: 'https://github.com/Q42/dutchman',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
@@ -12,7 +12,10 @@ Npm.depends({
   "google-translate": "1.0.2",
   "snowball": "0.3.1",
   "nodehun" : "2.0.8",
-  "dictionary-nl": "1.0.1"
+  "dictionary-nl": "1.0.1",
+  "find-synonyms": "0.0.1",
+  "natural": "0.2.1",
+  "symbols": "0.0.3"
 });
 
 Package.onUse(function(api) {
@@ -22,12 +25,20 @@ Package.onUse(function(api) {
   api.export('Dutchman');
   // Specify the source code for the package.
   api.addFiles([
-    'server/flying.js',
-    'server/vendor/hunspell.js',
-    'server/vendor/snowball.js',
-    'server/vendor/translate.js',
-    'server/etc/stopwords.js'],
+    'server/dutchman.js',
+    'server/helpers/hunspell.js',
+    'server/helpers/snowball.js',
+    'server/helpers/translate.js',
+    'server/helpers/synonyms.js',
+    'server/helpers/tense.js'],
     'server');
+  api.addFiles([
+    'lib/etc/stopwords.js',
+    'lib/etc/verbs.js',
+    'lib/flying.js'],[
+    'client',
+    'server']
+  );
   api.addFiles(
     'client/dutchman.js',
     'client');
