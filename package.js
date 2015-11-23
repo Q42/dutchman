@@ -1,6 +1,6 @@
 Package.describe({
   name: 'q42:dutchman',
-  version: '0.2.0',
+  version: '0.2.1',
   summary: 'A Dutch linguistics utility library',
   git: 'https://github.com/Q42/dutchman',
   // By default, Meteor will default to using README.md for documentation.
@@ -21,8 +21,6 @@ Npm.depends({
 Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
   api.use('ecmascript');
-  // Export the object 'Dutchman' to packages or apps that use this package.
-  api.export('Dutchman');
   // Specify the source code for the package.
   api.addFiles([
     'server/dutchman.js',

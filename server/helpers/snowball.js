@@ -18,7 +18,7 @@ this.DutchmanSnowball = class {
 
     static stem(string) {
         check(string, String);
-        const perWord = string.split(" ");
+        const perWord = FlyingDutchman.cleanString(string).split(" ");
         let stemmed = [];
 
         perWord.forEach(toStem => {

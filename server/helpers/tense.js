@@ -21,7 +21,7 @@ this.DutchmanTense = class {
 
     static toPastParticiple(string) {
         check(string, String);
-        const perWord = string.split(" ");
+        const perWord = FlyingDutchman.cleanString(string).split(" ");
         let processed = [];
 
         perWord.forEach((word) =>  {
