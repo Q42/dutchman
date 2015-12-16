@@ -59,8 +59,6 @@ returns
 
 ### Check Spelling (experimental)
 
-The details returned by the spelling checker is an object containing all the words of the sentence seperately as a key with a boolean as a value.
-The boolean is representing whether or not the sentence was correctly spelled.
 ```
 dutchman.checkSpelling("Ik heb een stukje meteor geprogramaard.").then((detailObject) => {
     // Use your details here
@@ -70,7 +68,7 @@ dutchman.checkSpelling("Ik heb een stukje meteor geprogramaard.").then((detailOb
 ```
 returns 
 ```
-{
+[
   {correct: true},
   {correct: true},
   {correct: true},
@@ -81,10 +79,10 @@ returns
     originalWord: "geprogramaard",
     suggestions: ["geprogrammeerd", "gedeprogrammeerd", "deprogrammeerde", "programakkoord"]
   },
-}
+]
 ```
 
-### Get Synonyms
+### Get Synonyms (experimental)
 
 The synonyms fetched from the individual words of the sentence are also stemmed in the process. 
 This way you can instantly use them to find stuff related to this sentence.
