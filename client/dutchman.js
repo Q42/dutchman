@@ -19,8 +19,6 @@
 Meteor.DutchmanClient = class {
 
     /**
-     *
-     *
      * @method removeStopWords
      * @param {String} string The string from which to remove the stopwords
      * @param {String} lang The languageCode for which stopwords array to use in the process.

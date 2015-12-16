@@ -28,8 +28,6 @@ Meteor.DutchmanServer = class {
     }
 
     /**
-     *
-     *
      * @method stem
      * @param {String} input The string to be split and stemmed
      * @return {Array} returns an array containing all valid stems
@@ -67,8 +65,6 @@ Meteor.DutchmanServer = class {
     }
 
     /**
-     *
-     *
      * @method checkSpelling
      * @param {String} input The string to be checked
      * @return {Object} returns an object with summarized data
