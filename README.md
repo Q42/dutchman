@@ -46,9 +46,15 @@ const dutchman = new Meteor.DutchmanServer("GOOGLE API KEY");
 
 ### Get Stemming
 ```
-dutchman.stem("This is a sentence which needs stemming.").then((stemArray) => {
+dutchman.stem("Ik heb een stukje meteor geprogrammeerd.").then((stemArray) => {
     // Use your array of stems here
+}), function(err){
+    console.log(err);
 });
+```
+returns
+```
+["slice", "meteor", "program"]
 ```
 
 ### Check Spelling (experimental)
@@ -56,9 +62,26 @@ dutchman.stem("This is a sentence which needs stemming.").then((stemArray) => {
 The details returned by the spelling checker is an object containing all the words of the sentence seperately as a key with a boolean as a value.
 The boolean is representing whether or not the sentence was correctly spelled.
 ```
-dutchman.checkSpelling("These is a sentance whihc neads it's speling checkt.").then((detailObject) => {
+dutchman.checkSpelling("Ik heb een stukje meteor geprogramaard.").then((detailObject) => {
     // Use your details here
+}), function(err){
+    console.log(err);
 });
+```
+returns 
+```
+{
+  {correct: true},
+  {correct: true},
+  {correct: true},
+  {correct: true},
+  {correct: true},
+  {
+    correct: false,
+    originalWord: "geprogramaard",
+    suggestions: ["geprogrammeerd", "gedeprogrammeerd", "deprogrammeerde", "programakkoord"]
+  },
+}
 ```
 
 ### Get Synonyms
@@ -70,6 +93,8 @@ The array returned contains arrays of synonyms.
 // synonyms("A string containing words from which you want synonyms", synonymAmount);
 dutchman.synonyms("Some words", 5).then((synonyms) => {
     // Use the synonyms here
+}), function(err){
+    console.log(err);
 });
 ```
 
