@@ -44,23 +44,26 @@ Meteor.DutchmanServer = class {
                 reject(err);
             }
 
-            const string = FlyingDutchman.removeStopWords(
-                FlyingDutchman.cleanString(input), stopwordsArray_NL);
+            const cleanString = FlyingDutchman.cleanString(input);
+            const withoutStopwords = FlyingDutchman.removeStopWords(
+                cleanString,
+                stopwordsArray_NL);
 
+            // Translate to English to be able to do algorithmic stemming
             FlyingDutchman.getTranslate(these.googleApiKey)
-                .translate(string)
-                // Translate to english
+                .translate(withoutStopwords)
                 .then(translated => {
-                    resolve(FlyingDutchman.getCleanArray(
-                        // Stem the word
-                        DutchmanSnowball.stem(
-                            // Transform to past participle
-                            DutchmanTense.toPastParticiple(
-                                // Remove english stopwords
-                                FlyingDutchman.removeStopWords(
-                                    translated,
-                                    stopwordsArray_EN)))));
-                },reject);
+                    const translatedWithoutStopwords = FlyingDutchman.removeStopWords(
+                        translated,
+                        stopwordsArray_EN);
+                    const pastParticiple = DutchmanTense.toPastParticiple(
+                        translatedWithoutStopwords);
+                    const stemmed = DutchmanSnowball.stem(
+                        pastParticiple);
+                    const cleanedArray = FlyingDutchman.getCleanArray(
+                        stemmed);
+                    resolve(cleanedArray);
+                }, reject);
         });
     }
 
