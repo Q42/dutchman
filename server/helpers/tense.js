@@ -61,25 +61,30 @@ this.DutchmanTense = class {
     }
 
     endsWithC(verb) {
-        return verb[verb.length - 1].toLowerCase() === 'c';
+        const char0FromEnd = verb.substr(-1, 1);
+        return char0FromEnd.toLowerCase() === 'c';
     }
 
     endsWithConsonantPlusY(verb) {
-        const last = verb.length - 1;
-        return verb[last].toLowerCase() === 'y'
-            && symbols.is_consonant(verb[last - 1]);
+        const char0FromEnd = verb.substr(-1, 1);
+        const char1FromEnd = verb.substr(-2, 1);
+        return char0FromEnd.toLowerCase() === 'y'
+            && symbols.is_consonant(char1FromEnd);
     }
 
     endsWithE(verb) {
-        return verb[verb.length - 1].toLowerCase() === 'e';
+        const char0FromEnd = verb.substr(-1, 1);
+        return char0FromEnd.toLowerCase() === 'e';
     }
 
     endsWithTwoVowelsConsonant(verb) {
-        const last = verb.length - 1;
+        const char0FromEnd = verb.substr(-1, 1);
+        const char1FromEnd = verb.substr(-2, 1);
+        const char2FromEnd = verb.substr(-3, 1);
 
-        return symbols.is_consonant(verb[last])
-            && symbols.is_vovel(verb[last - 1])
-            && symbols.is_vovel(verb[last - 2]);
+        return symbols.is_consonant(char0FromEnd)
+            && symbols.is_vovel(char1FromEnd)
+            && symbols.is_vovel(char2FromEnd);
     }
 
     alreadyPast(verb) {
@@ -105,7 +110,7 @@ this.DutchmanTense = class {
                 return verb + 'ed';
 
             case this.singleVowelConsonant(verb) && this.stressEnd(verb):
-                return verb + verb[verb.length - 1] + 'ed';
+                return verb + verb.substr(-1, 1) + 'ed';
 
             default:
                 return verb + 'ed';
@@ -113,13 +118,15 @@ this.DutchmanTense = class {
     }
 
     singleVowelConsonant(verb) {
-        const last = verb.length - 1;
+        const char0FromEnd = verb.substr(-1, 1);
+        const char1FromEnd = verb.substr(-2, 1);
+        const char2FromEnd = verb.substr(-3, 1);
 
-        return symbols.is_consonant(verb[last])
-            && symbols.is_vovel(verb[last - 1])
-            && !symbols.is_vovel(verb[last - 2])
-            && verb[last] !== 'w'
-            && verb[last] !== 'x';
+        return symbols.is_consonant(char0FromEnd)
+            && symbols.is_vovel(char1FromEnd)
+            && !symbols.is_vovel(char2FromEnd)
+            && char0FromEnd !== 'w'
+            && char0FromEnd !== 'x';
     }
 
     stressEnd(word) {
