@@ -11,10 +11,12 @@
 
 'use strict';
 
-const   Snowball    = Npm.require("snowball"),
+import FlyingDutchman from '../../lib/flying'
+
+const   Snowball    = Npm.require('snowball'),
         stemmer     = new Snowball('English');
 
-this.DutchmanSnowball = class {
+class DutchmanSnowball {
 
     static stem(string) {
         check(string, String);
@@ -30,3 +32,5 @@ this.DutchmanSnowball = class {
         return stemmed.join(" ");
     }
 };
+
+export default DutchmanSnowball;

@@ -13,7 +13,7 @@
 
 const synonyms = Npm.require('find-synonyms');
 
-this.DutchmanSynonyms = class {
+class DutchmanSynonyms {
 
     static getSynonyms(word, amountToGet) {
         const amount = amountToGet || 5;
@@ -25,3 +25,5 @@ this.DutchmanSynonyms = class {
         });
     }
 };
+
+export default DutchmanSynonyms;

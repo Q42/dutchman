@@ -13,11 +13,14 @@
 
 'use strict';
 
+import FlyingDutchman from '../../lib/flying'
+import Verbs from '../../lib/etc/verbs'
+
 const presentVerbInflector = new (Npm.require('natural').PresentVerbInflector),
     symbols = Npm.require('symbols');
 
 
-this.DutchmanTense = class {
+class DutchmanTense {
 
     static toPastParticiple(string) {
         check(string, String);
@@ -52,6 +55,7 @@ this.DutchmanTense = class {
     }
 
     findIrregularVerb(verb) {
+        const irregularVerbs = Verbs.irregularVerbs();
         for (let i in irregularVerbs) {
             if (irregularVerbs[i].indexOf(verb) !== -1) {
                 return irregularVerbs[i].slice(-2);
@@ -130,6 +134,8 @@ this.DutchmanTense = class {
     }
 
     stressEnd(word) {
-        return stressWords.indexOf(word) === -1;
+        return Verbs.stressWords().indexOf(word) === -1;
     }
 };
+
+export default DutchmanTense;

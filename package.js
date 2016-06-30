@@ -1,6 +1,6 @@
 Package.describe({
   name: 'q42:dutchman',
-  version: '0.2.4',
+  version: '0.2.5',
   summary: 'A Dutch linguistics utility library',
   git: 'https://github.com/Q42/dutchman',
   // By default, Meteor will default to using README.md for documentation.
@@ -19,27 +19,12 @@ Npm.depends({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.2.1');
+  api.versionsFrom('1.3');
   api.use('ecmascript');
-  // Specify the source code for the package.
-  api.addFiles([
-    'server/dutchman.js',
-    'server/helpers/hunspell.js',
-    'server/helpers/snowball.js',
-    'server/helpers/translate.js',
-    'server/helpers/synonyms.js',
-    'server/helpers/tense.js'],
-    'server');
-  api.addFiles([
-    'lib/etc/stopwords.js',
-    'lib/etc/verbs.js',
-    'lib/flying.js'],[
-    'client',
-    'server']
-  );
-  api.addFiles(
-    'client/dutchman.js',
-    'client');
+  api.mainModule('client/dutchman.js', 'client');
+  api.mainModule('server/dutchman.js', 'server');
+  api.export('DutchmanClient');
+  api.export('DutchmanServer');
 });
 
 Package.onTest(function(api) {
