@@ -11,6 +11,14 @@
 
 'use strict';
 
+import FlyingDutchman from '../lib/flying'
+import Stopwords from '../lib/etc/stopwords'
+import DutchmanHunspell from './helpers/hunspell'
+import DutchmanSnowball from './helpers/snowball'
+import DutchmanSynonyms from './helpers/synonyms'
+import DutchmanTense from './helpers/tense'
+import DutchmanTranslate from './helpers/translate'
+
 /**
  * Methods available on the server
  * This class requires a valid Google API Key for it's most promising features,
@@ -19,7 +27,7 @@
  * @class Meteor.DutchmanServer
  * @constructor
  */
-Meteor.DutchmanServer = class {
+class DutchmanServer {
 
     constructor(googleApiKey) {
 
@@ -47,15 +55,15 @@ Meteor.DutchmanServer = class {
             const cleanString = FlyingDutchman.cleanString(input);
             const withoutStopwords = FlyingDutchman.removeStopWords(
                 cleanString,
-                stopwordsArray_NL);
+                Stopwords.NL());
 
             // Translate to English to be able to do algorithmic stemming
-            FlyingDutchman.getTranslate(these.googleApiKey)
+            DutchmanServer.getTranslate(these.googleApiKey)
                 .translate(withoutStopwords)
                 .then(translated => {
                     const translatedWithoutStopwords = FlyingDutchman.removeStopWords(
                         translated,
-                        stopwordsArray_EN);
+                        Stopwords.EN());
                     const pastParticiple = DutchmanTense.toPastParticiple(
                         translatedWithoutStopwords);
                     const stemmed = DutchmanSnowball.stem(
@@ -81,7 +89,7 @@ Meteor.DutchmanServer = class {
             );
             let wordIteration = [];
             words.forEach(word => {
-                wordIteration.push(FlyingDutchman.getHunspell().suggestions(word))
+                wordIteration.push(DutchmanServer.getHunspell().suggestions(word))
             });
             Promise.all(wordIteration).then((result) => {
                 resolve(result);
@@ -106,13 +114,13 @@ Meteor.DutchmanServer = class {
         check(input, String);
 
         return new Promise((resolve, reject) => {
-            FlyingDutchman.getTranslate(these.googleApiKey)
-                .translate(FlyingDutchman.removeStopWords(input, stopwordsArray_NL))
+            DutchmanServer.getTranslate(these.googleApiKey)
+                .translate(FlyingDutchman.removeStopWords(input, Stopwords.NL()))
                 // Translate to english
                 .then(translated => {
 
                     const words = FlyingDutchman.getCleanArray(FlyingDutchman.removeStopWords(
-                        FlyingDutchman.cleanString(translated), stopwordsArray_EN));
+                        FlyingDutchman.cleanString(translated), Stopwords.EN()));
 
                     let wordIteration = [];
                     words.forEach(word => {
@@ -134,4 +142,21 @@ Meteor.DutchmanServer = class {
                 });
         });
     }
+
+    static getHunspell() {
+        if (this.dutchmanHunspell == null) {
+            this.dutchmanHunspell = new DutchmanHunspell();
+        }
+        return this.dutchmanHunspell;
+    }
+
+    static getTranslate(googleApiKey) {
+        check(googleApiKey, String);
+        if (this.dutchmanTranslate == null) {
+            this.dutchmanTranslate = new DutchmanTranslate(googleApiKey);
+        }
+        return this.dutchmanTranslate;
+    }
 };
+
+export default DutchmanServer;

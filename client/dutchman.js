@@ -11,12 +11,15 @@
 
 'use strict';
 
+import FlyingDutchman from '../lib/flying'
+import Stopwords from '../lib/etc/stopwords'
+
 /**
  * Methods available on the client
  * @class Meteor.DutchmanServer
  * @constructor
  */
-Meteor.DutchmanClient = class {
+class DutchmanClient {
 
     /**
      * @method removeStopWords
@@ -29,6 +32,8 @@ Meteor.DutchmanClient = class {
 
         check(string, String);
         return FlyingDutchman.removeStopWords(FlyingDutchman.cleanString(string),
-            (lang == 'en') ? stopwordsArray_EN : stopwordsArray_NL);
+            (lang == 'en') ? Stopwords.EN() : Stopwords.NL());
     }
 };
+
+export default DutchmanClient;

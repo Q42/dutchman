@@ -11,7 +11,7 @@
 
 'use strict';
 
-this.DutchmanTranslate = class {
+class DutchmanTranslate {
 
     constructor(googleApiKey) {
         this.google = Npm.require('google-translate')(googleApiKey);
@@ -34,3 +34,5 @@ this.DutchmanTranslate = class {
             });
     }
 };
+
+export default DutchmanTranslate;

@@ -11,10 +11,10 @@
 
 'use strict';
 
-const   Hunspell    = Npm.require("nodehun"),
+const   Hunspell    = Npm.require('nodehun'),
         Dictionary  = Npm.require('dictionary-nl');
 
-this.DutchmanHunspell = class {
+class DutchmanHunspell {
 
     suggestions(word) {
         check(word, String);
@@ -77,3 +77,5 @@ this.DutchmanHunspell = class {
     }
 
 };
+
+export default DutchmanHunspell;
